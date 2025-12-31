@@ -1,0 +1,59 @@
+@model List<TechozStore.Models.CartItem>
+@{
+    ViewData["Title"] = "Shopping Cart";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4">Shopping Cart</h2>
+    @if (Model.Count == 0)
+    {
+        <div class="alert alert-info">
+            Your cart is empty. <a asp-controller="Home" asp-action="Index" class="alert-link">Continue shopping</a>.
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Product.Name</td>
+                            <td>$@item.Product.Price</td>
+                            <td>@item.Quantity</td>
+                            <td>$@item.Total</td>
+                            <td>
+                                <a asp-action="RemoveFromCart" asp-route-productId="@item.Product.Id" class="btn btn-danger btn-sm">
+                                    <i class="fas fa-trash"></i> Remove
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3" class="text-end fw-bold">Grand Total:</td>
+                        <td class="fw-bold">$@Model.Sum(x => x.Total)</td>
+                        <td>
+                            <a asp-action="ClearCart" class="btn btn-warning btn-sm">Clear</a>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <div class="d-flex justify-content-between mt-4">
+            <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary">Continue Shopping</a>
+            <button class="btn btn-primary btn-lg">Checkout</button>
+        </div>
+    }
+</div>

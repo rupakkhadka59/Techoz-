@@ -1,0 +1,41 @@
+﻿@model IEnumerable<TechozStore.Models.Product>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="hero-section text-center text-white mb-5">
+    <div class="container">
+        <h1 class="display-4 fw-bold">Welcome to Techoz Store</h1>
+        <p class="lead">Find your perfect laptop today.</p>
+        <a href="#products" class="btn btn-light btn-lg mt-3">Shop Now</a>
+    </div>
+</div>
+
+<div class="container" id="products">
+    <h2 class="text-center mb-4">Featured Products</h2>
+    <div class="row">
+        @foreach (var product in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card product-card h-100">
+                    <div class="card-img-wrapper">
+                        <img src="@product.ImageUrl" class="card-img-top" alt="@product.Name">
+                        <div class="overlay">
+                            <button class="btn btn-light rounded-circle"><i class="fas fa-eye"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">@product.Name</h5>
+                        <p class="card-text text-muted">@product.Description</p>
+                        <div class="mt-auto d-flex justify-content-between align-items-center">
+                            <span class="h4 mb-0 text-primary">$@product.Price</span>
+                            <a href="@Url.Action("AddToCart", "Cart", new { productId = product.Id, name = product.Name, price = product.Price })" class="btn btn-outline-primary rounded-pill">
+                                <i class="fas fa-cart-plus me-2"></i>Add to Cart
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
